@@ -1,0 +1,15 @@
+﻿.topbar-wrapper img[alt="Swagger UI"],
+.topbar-wrapper .link span {
+    display: none !important;
+}
+
+.topbar-wrapper .link:after {
+    content: "";
+    display: inline-block;
+    width: 150px;
+    height: 40px;
+    background: url('/logo.png') no-repeat center center;
+    background-size: contain;
+    vertical-align: middle;
+    margin-left: 10px;
+}
