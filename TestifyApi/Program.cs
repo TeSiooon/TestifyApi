@@ -1,18 +1,16 @@
 using Microsoft.EntityFrameworkCore;
+using Testify.API.Extensions;
 using Testify.Domain.Entities;
 using Testify.Infrastructure.Extensions;
 using Testify.Infrastructure.Persistance;
+using Testify.Infrastructure.Seeders;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
+builder.AddPresentation();
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddScoped<UserSeeder>();
+
 
 var app = builder.Build();
 
@@ -20,20 +18,25 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<TestifyDbContext>();
     db.Database.Migrate();
+    var seeder = scope.ServiceProvider.GetRequiredService<UserSeeder>();
+    await seeder.SeedUsersAsync();
 }
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/Identity/swagger.json", "Identity API");
+        c.SwaggerEndpoint("/swagger/Quizzes/swagger.json", "Quiz API");
+    });
 }
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
-
 app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 

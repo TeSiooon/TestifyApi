@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Testify.Domain.Entities;
 using Testify.Infrastructure.Persistance;
+using Testify.Infrastructure.Seeders;
 
 namespace Testify.Infrastructure.Extensions;
 
