@@ -17,7 +17,7 @@ public class CreateQuizCommand : IRequest<Guid>
     public class Handler : IRequestHandler<CreateQuizCommand, Guid>
     {
         private readonly IQuizRepository quizRepository;
-        public Handler( IQuizRepository quizRepository)
+        public Handler(IQuizRepository quizRepository)
         {
             this.quizRepository = quizRepository;
         }

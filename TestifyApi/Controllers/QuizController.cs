@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Testify.Application.Quizzes.Create;
+using Testify.Application.Quizzes.Queries.GetQuizById;
 
 namespace Testify.API.Controllers;
 
@@ -15,5 +16,11 @@ public class QuizController(IMediator mediator) : ControllerBase
     {
         var quizId = await mediator.Send(command);
         return Ok(quizId);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetQuizByIdAsync([FromRoute] Guid id)
+    {
+        return Ok(await mediator.Send(new GetQuizByIdQuery(id)));
     }
 }
