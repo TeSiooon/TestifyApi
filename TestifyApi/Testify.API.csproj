@@ -19,6 +19,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\logo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Testify.Application\Testify.Application.csproj" />
     <ProjectReference Include="..\Testify.Infrastructure\Testify.Infrastructure.csproj" />
   </ItemGroup>

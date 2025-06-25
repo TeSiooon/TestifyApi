@@ -26,10 +26,12 @@ using (var scope = app.Services.CreateScope())
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
+    app.UseStaticFiles();
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/Identity/swagger.json", "Identity API");
         c.SwaggerEndpoint("/swagger/Quizzes/swagger.json", "Quiz API");
+        c.InjectStylesheet("/custom.css");
     });
 }
 

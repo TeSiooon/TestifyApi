@@ -40,7 +40,6 @@ public static class WebApplicationBuilderExtensions
                     return docName == "Identity";
                 return apiDesc.GroupName == docName;
             });
-
         });
     }
 }
