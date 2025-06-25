@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Testify.API.Extensions;
+using Testify.Application.Extensions;
 using Testify.Domain.Entities;
 using Testify.Infrastructure.Extensions;
 using Testify.Infrastructure.Persistance;
@@ -8,6 +9,7 @@ using Testify.Infrastructure.Seeders;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddPresentation();
+builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddScoped<UserSeeder>();
 

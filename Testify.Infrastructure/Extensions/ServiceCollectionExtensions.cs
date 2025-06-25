@@ -3,8 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Testify.Domain.Entities;
+using Testify.Domain.Repositories;
 using Testify.Infrastructure.Persistance;
-using Testify.Infrastructure.Seeders;
+using Testify.Infrastructure.Repositories;
 
 namespace Testify.Infrastructure.Extensions;
 
@@ -19,5 +20,7 @@ public static class ServiceCollectionExtensions
         services.AddIdentityApiEndpoints<User>()
             .AddRoles<IdentityRole<Guid>>()
             .AddEntityFrameworkStores<TestifyDbContext>();
+
+        services.AddScoped<IQuizRepository, QuizRepository>();
     }
 }
