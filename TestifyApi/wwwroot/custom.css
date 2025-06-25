@@ -6,10 +6,10 @@
 .topbar-wrapper .link:after {
     content: "";
     display: inline-block;
-    width: 150px; /* szerokość logo */
-    height: 40px; /* wysokość dostosowana do navbar */
+    width: 150px;
+    height: 40px;
     background: url('/logo.png') no-repeat center center;
     background-size: contain;
-    vertical-align: middle; /* wyrównanie w pionie */
-    margin-left: 10px; /* opcjonalne przesunięcie od lewej */
+    vertical-align: middle;
+    margin-left: 10px;
 }
