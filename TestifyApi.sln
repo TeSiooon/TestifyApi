@@ -3,7 +3,24 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestifyApi", "TestifyApi\TestifyApi.csproj", "{2A1F0A34-B9C6-4193-9EDB-B41AB4C0101D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testify.API", "TestifyApi\Testify.API.csproj", "{2A1F0A34-B9C6-4193-9EDB-B41AB4C0101D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7021147C-DF19-4074-956D-10C8DE10090A} = {7021147C-DF19-4074-956D-10C8DE10090A}
+		{FF59097F-7665-4812-B33D-0ADEF2D57921} = {FF59097F-7665-4812-B33D-0ADEF2D57921}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testify.Domain", "Testify.Domain\Testify.Domain.csproj", "{635AEC5C-3CAF-41D1-8971-07FEA28E085A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testify.Application", "Testify.Application\Testify.Application.csproj", "{7021147C-DF19-4074-956D-10C8DE10090A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{635AEC5C-3CAF-41D1-8971-07FEA28E085A} = {635AEC5C-3CAF-41D1-8971-07FEA28E085A}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testify.Infrastructure", "Testify.Infrastructure\Testify.Infrastructure.csproj", "{FF59097F-7665-4812-B33D-0ADEF2D57921}"
+	ProjectSection(ProjectDependencies) = postProject
+		{635AEC5C-3CAF-41D1-8971-07FEA28E085A} = {635AEC5C-3CAF-41D1-8971-07FEA28E085A}
+		{7021147C-DF19-4074-956D-10C8DE10090A} = {7021147C-DF19-4074-956D-10C8DE10090A}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +32,18 @@ Global
 		{2A1F0A34-B9C6-4193-9EDB-B41AB4C0101D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A1F0A34-B9C6-4193-9EDB-B41AB4C0101D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A1F0A34-B9C6-4193-9EDB-B41AB4C0101D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{635AEC5C-3CAF-41D1-8971-07FEA28E085A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{635AEC5C-3CAF-41D1-8971-07FEA28E085A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{635AEC5C-3CAF-41D1-8971-07FEA28E085A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{635AEC5C-3CAF-41D1-8971-07FEA28E085A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7021147C-DF19-4074-956D-10C8DE10090A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7021147C-DF19-4074-956D-10C8DE10090A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7021147C-DF19-4074-956D-10C8DE10090A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7021147C-DF19-4074-956D-10C8DE10090A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF59097F-7665-4812-B33D-0ADEF2D57921}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF59097F-7665-4812-B33D-0ADEF2D57921}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF59097F-7665-4812-B33D-0ADEF2D57921}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF59097F-7665-4812-B33D-0ADEF2D57921}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
