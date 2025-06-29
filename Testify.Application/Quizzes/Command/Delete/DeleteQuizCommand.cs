@@ -4,9 +4,9 @@ using Testify.Domain.Repositories;
 
 namespace Testify.Application.Quizzes.Command.Delete;
 
-public class DeleteQuizCommand : IRequest<Unit>
+public class DeleteQuizCommand(Guid id) : IRequest<Unit>
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; } = id;
 
     public class Handler : IRequestHandler<DeleteQuizCommand, Unit>
     {

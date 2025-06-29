@@ -45,20 +45,28 @@ public class TestifyFixture : IAsyncLifetime, IDisposable
 
     public async Task DisposeAsync()
     {
-        // resetuj baze
+        // clear db
         var db = scope.ServiceProvider.GetRequiredService<TestifyDbContext>();
         await db.Database.EnsureDeletedAsync();
     }
 
     public async Task InitializeAsync()
     {
-        // utworz baze
+        // create db
         var db = scope.ServiceProvider.GetRequiredService<TestifyDbContext>();
         await db.Database.EnsureCreatedAsync();
     }
 
     public Task<TResult> ExecuteCommandAsync<TResult>(IRequest<TResult> command)
     {
-        return Mediator.Send(command);
+        var result =  Mediator.Send(command);
+        var db = scope.ServiceProvider.GetRequiredService<TestifyDbContext>();
+        ClearChangeTracker(db);
+        return result;
+    }
+
+    private void ClearChangeTracker(TestifyDbContext db)
+    {
+        db.ChangeTracker.Clear();
     }
 }

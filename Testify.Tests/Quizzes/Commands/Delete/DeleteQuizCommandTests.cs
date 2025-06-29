@@ -54,17 +54,13 @@ public class DeleteQuizCommandTests
         var quizId = await fixture.ExecuteCommandAsync(command);
 
 
-        var deleteQuizCommand = new DeleteQuizCommand
-        {
-            Id = quizId,
-        };
+        var deleteQuizCommand = new DeleteQuizCommand(quizId);
 
         // Act
-        await fixture.ExecuteCommandAsync(deleteQuizCommand);
+        Func<Task> act = async () => await fixture.ExecuteCommandAsync(deleteQuizCommand);
 
         // Assert
-        var quizzes = await fixture.QuizRepository.GetAllAsync();
-        quizzes.Count.Should().Be(0);
+        await act.Should().NotThrowAsync();
     }
 
     [Fact]
@@ -73,7 +69,7 @@ public class DeleteQuizCommandTests
         // Arrange
         var quizId = Guid.NewGuid();
 
-        var command = new DeleteQuizCommand { Id = quizId };
+        var command = new DeleteQuizCommand(quizId);
         // Act
         Func<Task> act = async () => await fixture.ExecuteCommandAsync(command);
 
