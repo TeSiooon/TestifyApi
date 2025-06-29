@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Common\" />
+    <ProjectReference Include="..\Testify.Domain\Testify.Domain.csproj" />
   </ItemGroup>
 
 </Project>

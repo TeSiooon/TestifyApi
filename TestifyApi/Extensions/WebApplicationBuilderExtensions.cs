@@ -1,4 +1,7 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
+using Testify.API.Converters;
+using Testify.API.Middlewares;
 
 namespace Testify.API.Extensions;
 
@@ -8,7 +11,13 @@ public static class WebApplicationBuilderExtensions
     {
         builder.Services.AddAuthentication();
         builder.Services.AddAuthorization();
-        builder.Services.AddControllers();
+
+        builder.Services.AddControllers()
+            .AddJsonOptions(options => 
+            {
+                options.JsonSerializerOptions.Converters.Add(new TimeSpanJsonConverter());
+            });
+
         builder.Services.AddEndpointsApiExplorer();
 
         builder.Services.AddSwaggerGen(c => 
@@ -40,6 +49,11 @@ public static class WebApplicationBuilderExtensions
                     return docName == "Identity";
                 return apiDesc.GroupName == docName;
             });
+
+            c.SchemaFilter<TimeSpanSchemaFilter>();
+
         });
+
+        builder.Services.AddScoped<ErrorHandlingMiddleware>();
     }
 }
