@@ -1,4 +1,4 @@
-﻿namespace Testify.Application.Quizzes.Create;
+﻿namespace Testify.Application.Quizzes.Command.Create;
 
 public class QuestionDto
 {

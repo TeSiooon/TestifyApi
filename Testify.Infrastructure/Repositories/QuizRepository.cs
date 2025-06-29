@@ -17,7 +17,6 @@ public class QuizRepository : IQuizRepository
     public async Task Create(Quiz entity)
     {
         await dbContext.Quizzes.AddAsync(entity);
-        await dbContext.SaveChangesAsync();
     }
 
     public async Task<(IEnumerable<Quiz>, int)> GetAllMatchingAsync(string? searchPhrase, int pageSize, int pageNumber, string? sortBy, SortDirection sortDirection)
@@ -25,6 +24,7 @@ public class QuizRepository : IQuizRepository
         var searchPhraseLower = searchPhrase?.ToLower();
 
         var baseQuery =  dbContext.Quizzes
+            .AsNoTracking()
             .Where(q => searchPhraseLower == null
             || (q.Title.ToLower().Contains(searchPhraseLower)));
 
@@ -64,5 +64,19 @@ public class QuizRepository : IQuizRepository
     public Task Update(Quiz entity)
     {
         throw new NotImplementedException();
+    }
+
+    public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var quiz = await dbContext.Quizzes.FirstOrDefaultAsync(x => x.Id == id, cancellationToken)
+            ?? throw new KeyNotFoundException();
+        dbContext.Quizzes.Remove(quiz);
+    }
+
+    public async Task<List<Quiz>> GetAllAsync(CancellationToken cancellationToken)
+    {
+        var quizzes = await dbContext.Quizzes.ToListAsync(cancellationToken);
+
+        return quizzes;
     }
 }

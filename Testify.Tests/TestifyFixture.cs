@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Testify.Application.Common;
 using Testify.Application.Extensions;
 using Testify.Domain.Repositories;
 using Testify.Infrastructure.Persistance;
@@ -9,27 +11,31 @@ namespace Testify.IntegrationTests;
 
 public class TestifyFixture : IAsyncLifetime, IDisposable
 {
+    private readonly ServiceProvider provider;
     private readonly IServiceScope scope;
-    public IServiceProvider Services => scope.ServiceProvider;
+
+    public IQuizRepository QuizRepository { get; }
+    public IMediator Mediator { get; }
+
 
     public TestifyFixture()
     {
-        //todo zmienic na WebApplicationFactory aby mogl dzialac na bazie Program.cs i nie duplikowac kodu
-        // trzeba bedzie dodac configuracje bazy danych na inmemory
         var services = new ServiceCollection();
 
-        // DbContext InMemory
+        // InMemory EF Core
         services.AddDbContext<TestifyDbContext>(opts =>
             opts.UseInMemoryDatabase($"TestifyDb_{Guid.NewGuid()}"));
 
-        // Rejestracja repozytoriów
         services.AddScoped<IQuizRepository, QuizRepository>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddApplication();
 
-        // tu inne zależności, np. AutoMapper, serwisy domenowe
+        provider = services.BuildServiceProvider();
 
-        var provider = services.BuildServiceProvider();
         scope = provider.CreateScope();
+
+        QuizRepository = scope.ServiceProvider.GetRequiredService<IQuizRepository>();
+        Mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
     }
 
     public void Dispose()
@@ -40,14 +46,19 @@ public class TestifyFixture : IAsyncLifetime, IDisposable
     public async Task DisposeAsync()
     {
         // resetuj baze
-        var db = Services.GetRequiredService<TestifyDbContext>();
+        var db = scope.ServiceProvider.GetRequiredService<TestifyDbContext>();
         await db.Database.EnsureDeletedAsync();
     }
 
     public async Task InitializeAsync()
     {
         // utworz baze
-        var db = Services.GetRequiredService<TestifyDbContext>();
+        var db = scope.ServiceProvider.GetRequiredService<TestifyDbContext>();
         await db.Database.EnsureCreatedAsync();
+    }
+
+    public Task<TResult> ExecuteCommandAsync<TResult>(IRequest<TResult> command)
+    {
+        return Mediator.Send(command);
     }
 }

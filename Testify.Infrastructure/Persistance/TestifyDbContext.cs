@@ -12,7 +12,7 @@ public class TestifyDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid
     {
     }
 
-    //public DbSet<User> Users { get; set; } // zbedne przez wykorzystanie identity
+    //public DbSet<User> Users { get; set; }
     public DbSet<UserQuizResult> UserQuizResults { get; set; }
     public DbSet<Quiz> Quizzes { get; set; }
     public DbSet<Question> Questions { get; set; }

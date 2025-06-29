@@ -1,23 +1,18 @@
 ﻿using FluentAssertions;
 using FluentValidation;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using Testify.Application.Quizzes.Create;
+using Testify.Application.Quizzes.Command.Create;
 using Testify.Domain.Constants;
-using Testify.Domain.Repositories;
 
 namespace Testify.IntegrationTests.Quizzes.Commands.Create;
 
 [Collection("Testify Collection")]
 public class CreateQuizCommandTests
 {
-    private readonly IMediator mediator;
-    private readonly IQuizRepository quizRepo;
+    private readonly TestifyFixture fixture;
 
     public CreateQuizCommandTests(TestifyFixture fixture)
     {
-        mediator = fixture.Services.GetRequiredService<IMediator>();
-        quizRepo = fixture.Services.GetRequiredService<IQuizRepository>();
+        this.fixture = fixture;
     }
 
     [Fact]
@@ -57,12 +52,13 @@ public class CreateQuizCommandTests
         };
 
         // Act
-        var newQuizId = await mediator.Send(command);
+        //var newQuizId = await mediator.Send(command);
+        var newQuizId = await fixture.ExecuteCommandAsync(command);
 
         // Assert
         Assert.NotEqual(Guid.Empty, newQuizId);
 
-        var createdQuiz = await quizRepo.GetById(newQuizId);
+        var createdQuiz = await fixture.QuizRepository.GetById(newQuizId);
 
         Assert.Equal(command.Title, createdQuiz!.Title);
         Assert.Equal(command.Description, createdQuiz.Description);
@@ -125,7 +121,7 @@ public class CreateQuizCommandTests
             }
         };
         // Act
-        Func<Task> act = async () => await mediator.Send(command);
+        Func<Task> act = async () => await fixture.ExecuteCommandAsync(command);
 
         // Assert
         await act.Should().ThrowAsync<ValidationException>();
@@ -154,7 +150,7 @@ public class CreateQuizCommandTests
         };
 
         // Act
-        Func<Task> act = async () => await mediator.Send(command);
+        Func<Task> act = async () => await fixture.ExecuteCommandAsync(command);
 
         // Assert
         await act.Should().ThrowAsync<ValidationException>();

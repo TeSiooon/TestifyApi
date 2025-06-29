@@ -1,9 +1,10 @@
 ﻿using MediatR;
+using Testify.Application.Common;
 using Testify.Domain.Constants;
 using Testify.Domain.Entities;
 using Testify.Domain.Repositories;
 
-namespace Testify.Application.Quizzes.Create;
+namespace Testify.Application.Quizzes.Command.Create;
 
 public class CreateQuizCommand : IRequest<Guid>
 {
@@ -19,9 +20,11 @@ public class CreateQuizCommand : IRequest<Guid>
     public class Handler : IRequestHandler<CreateQuizCommand, Guid>
     {
         private readonly IQuizRepository quizRepository;
-        public Handler(IQuizRepository quizRepository)
+        private readonly IUnitOfWork unitOfWork;
+        public Handler(IQuizRepository quizRepository, IUnitOfWork unitOfWork)
         {
             this.quizRepository = quizRepository;
+            this.unitOfWork = unitOfWork;
         }
 
         public async Task<Guid> Handle(CreateQuizCommand request, CancellationToken cancellationToken)
@@ -43,6 +46,8 @@ public class CreateQuizCommand : IRequest<Guid>
             }
 
             await quizRepository.Create(quiz);
+
+            await unitOfWork.SaveChangesAsync();
 
             return quiz.Id;
         }

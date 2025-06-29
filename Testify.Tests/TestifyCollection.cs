@@ -3,5 +3,5 @@
 [CollectionDefinition("Testify Collection")]
 public class TestifyCollection : ICollectionFixture<TestifyFixture>
 {
-    // marker – nic tu nie piszemy
+    // marker
 }

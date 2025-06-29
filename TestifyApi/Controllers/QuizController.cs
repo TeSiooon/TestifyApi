@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Testify.Application.Quizzes.Create;
+using Testify.Application.Quizzes.Command.Create;
 using Testify.Application.Quizzes.Queries.GetAllQuizzes;
 using Testify.Application.Quizzes.Queries.GetQuizById;
 using Testify.Application.ViewModels;

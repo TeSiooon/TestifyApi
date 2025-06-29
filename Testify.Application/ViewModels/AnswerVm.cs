@@ -7,7 +7,7 @@ namespace Testify.Application.ViewModels;
 /// <summary>
 /// Public-facing Answer view model. Does NOT include information whether answer is correct.
 /// </summary>
-public sealed record AnswerVm(Guid Id, string Text ) : IViewModel<AnswerVm, Answer>
+public sealed record AnswerVm(Guid Id, string Text) : IViewModel<AnswerVm, Answer>
 {
     private static readonly Func<Answer, AnswerVm> mapper = GetMapping().Compile();
 
