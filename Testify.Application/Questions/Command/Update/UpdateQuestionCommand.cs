@@ -9,30 +9,60 @@ namespace Testify.Application.Questions.Command.Update;
 public record UpdateQuestionCommand : IRequest<Unit>
 {
     public Guid Id { get; set; }
-    public QuestionDto QuestionDto { get; set; } // question with answers
+    public string Text { get; set; } = default!;
+    public List<UpdateAnswerDto> Answers { get; set; } = [];
 
     public class Handler : IRequestHandler<UpdateQuestionCommand, Unit>
     {
         private readonly IQuestionRepository questionRepository;
         private readonly IUnitOfWork unitOfWork;
+        private readonly IAnswerRepository answerRepository;
 
-        public Handler(IQuestionRepository questionRepository, IUnitOfWork unitOfWork)
+        public Handler(IQuestionRepository questionRepository, IUnitOfWork unitOfWork, IAnswerRepository answerRepository)
         {
             this.questionRepository = questionRepository;
             this.unitOfWork = unitOfWork;
+            this.answerRepository = answerRepository;
         }
-
         public async Task<Unit> Handle(UpdateQuestionCommand request, CancellationToken cancellationToken)
         {
-            var question = await questionRepository.GetByIdAsync(request.Id);
-            question.Update(request.QuestionDto.Text);
+            var question = await questionRepository.GetByIdAsync(request.Id, cancellationToken);
+            question.Update(request.Text);
+            var existingAnswers = question.Answers.ToDictionary(a => a.Id);
 
-            question.ClearAnswers();
-
-            foreach (var answerDto in request.QuestionDto.Answers)
+            foreach (var answerDto in request.Answers)
             {
-                var answer = Answer.Create(question.Id, answerDto.Text, answerDto.IsCorrect);
-                question.AddAnswer(answer);
+                switch(answerDto.AnswerActionType)
+                {
+                    case AnswerActionType.Add:
+                        var newAnswer = Answer.Create(request.Id, answerDto.Text, answerDto.IsCorrect);
+                        existingAnswers[newAnswer.Id] = newAnswer;
+                        await answerRepository.CreateAsync(newAnswer, cancellationToken);
+
+                        question.AddAnswer(newAnswer);
+
+                        break;
+
+                    case AnswerActionType.Update:
+                        if (!answerDto.Id.HasValue || !existingAnswers.TryGetValue(answerDto.Id.Value, out var answerToUpdate))
+                            throw new InvalidOperationException($"Cannot update: Answer with ID {answerDto.Id} not found.");
+
+                        answerToUpdate.Update(answerDto.Text, answerDto.IsCorrect);
+
+                        break;
+
+                    case AnswerActionType.Delete:
+                        if (!answerDto.Id.HasValue || !existingAnswers.TryGetValue(answerDto.Id.Value, out var answerToDelete))
+                            throw new InvalidOperationException($"Cannot delete: Answer with ID {answerDto.Id} not found.");
+
+                        question.RemoveAnswer(answerToDelete);
+                        existingAnswers.Remove(answerDto.Id.Value);
+
+                        break;
+
+                    default:
+                        throw new InvalidOperationException($"Unknown ActionType: {answerDto.AnswerActionType}");
+                }
             }
 
             await unitOfWork.SaveChangesAsync(cancellationToken);

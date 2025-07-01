@@ -3,6 +3,7 @@ using FluentValidation;
 using Testify.Application.Dtos;
 using Testify.Application.Questions.Command.Update;
 using Testify.IntegrationTests.Helpers;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Testify.IntegrationTests.Questions.Coomands.Update;
 
@@ -22,29 +23,47 @@ public class UpdateQuestionCommandTests
         // Arrange
         var (_, questionId) = await CreateQuizForTestHelper.CreateQuizWithQuestionAsync(fixture);
 
+        var question = await fixture.QuestionRepository.GetByIdAsync(questionId);
+        var existingAnswers = question.Answers.ToList();
+        var updatedAnswers = new List<UpdateAnswerDto>
+            {
+                new()
+                {
+                    AnswerActionType = Application.Common.AnswerActionType.Update,
+                    Id = existingAnswers[0].Id,
+                    Text = "Updated 1",
+                    IsCorrect = false
+                },
+                new()
+                {
+                    AnswerActionType = Application.Common.AnswerActionType.Update,
+                    Id = existingAnswers[1].Id,
+                    Text = "Now the correct one",
+                    IsCorrect = true
+                },
+                new()
+                {
+                    AnswerActionType = Application.Common.AnswerActionType.Add,
+                    Id = null,
+                    Text = "Brand new answer",
+                    IsCorrect = false
+                }
+            };
         var updateCommand = new UpdateQuestionCommand
         {
             Id = questionId,
-            QuestionDto = new QuestionDto
-            {
-                Text = "Updated question?",
-                Answers = new List<AnswerDto>
-                {
-                    new() { Text = "New 1", IsCorrect = false },
-                    new() { Text = "Correct", IsCorrect = true },
-                    new() { Text = "Wrong", IsCorrect = false }
-                }
-            }
+            Text = "Updated question?",
+            Answers = updatedAnswers
         };
         // Act
         await fixture.ExecuteCommandAsync(updateCommand);
 
         // Assert
-        var question = await fixture.QuestionRepository.GetByIdAsync(questionId);
-        question.Text.Should().Be("Updated question?");
-        //question.Answers.Should().HaveCount(3);
-        //question.Answers.Count(a => a.IsCorrect).Should().Be(1);
-        //question.Answers.Should().Contain(a => a.Text == "Correct" && a.IsCorrect);
+        var updatedQuestion = await fixture.QuestionRepository.GetByIdAsync(questionId);
+        updatedQuestion.Text.Should().Be("Updated question?");
+        updatedQuestion.Answers.Should().HaveCount(3);
+        updatedQuestion.Answers.Should().ContainSingle(a => a.Text == "Now the correct one" && a.IsCorrect);
+        updatedQuestion.Answers.Should().ContainSingle(a => a.Text == "Brand new answer");
     }
 
     [Fact]
@@ -55,14 +74,17 @@ public class UpdateQuestionCommandTests
         var updateCmd = new UpdateQuestionCommand
         {
             Id = invalidId,
-            QuestionDto = new QuestionDto
+            Text = "New?",
+            Answers = new List<UpdateAnswerDto>
             {
-                Text = "New?",
-                Answers = new List<AnswerDto>
-                {
-                    new() { Text = "A", IsCorrect = true },
-                    new() { Text = "B", IsCorrect = false }
-                }
+                new UpdateAnswerDto { 
+                    AnswerActionType = Application.Common.AnswerActionType.Update,
+                    Id = Guid.NewGuid(), Text = "New 1", IsCorrect = false },
+                new UpdateAnswerDto {
+                     AnswerActionType = Application.Common.AnswerActionType.Update,
+                    Id = Guid.NewGuid(), Text = "Correct", IsCorrect = true },
+                new UpdateAnswerDto {AnswerActionType = Application.Common.AnswerActionType.Update, 
+                    Id = Guid.NewGuid(), Text = "Wrong", IsCorrect = false }
             }
         };
 
@@ -81,13 +103,10 @@ public class UpdateQuestionCommandTests
         var updateCmd = new UpdateQuestionCommand
         {
             Id = questionId,
-            QuestionDto = new QuestionDto
+            Text = "Q?",
+            Answers = new List<UpdateAnswerDto>
             {
-                Text = "Q?",
-                Answers = new List<AnswerDto>
-                {
-                    new() { Text = "Only one", IsCorrect = true }
-                }
+                new UpdateAnswerDto { Id = Guid.NewGuid(), Text = "Wrong", IsCorrect = false }
             }
         };
 
@@ -107,14 +126,12 @@ public class UpdateQuestionCommandTests
         var updateCmd = new UpdateQuestionCommand
         {
             Id = questionId,
-            QuestionDto = new QuestionDto
+            Text = "Q?",
+            Answers = new List<UpdateAnswerDto>
             {
-                Text = "Q?",
-                Answers = new List<AnswerDto>
-                {
-                    new() { Text = "A", IsCorrect = false },
-                    new() { Text = "B", IsCorrect = false }
-                }
+                new UpdateAnswerDto { Id = Guid.NewGuid(), Text = "New 1", IsCorrect = false },
+                new UpdateAnswerDto { Id = Guid.NewGuid(), Text = "Correct", IsCorrect = false },
+                new UpdateAnswerDto { Id = Guid.NewGuid(), Text = "Wrong", IsCorrect = false }
             }
         };
 

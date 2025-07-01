@@ -16,6 +16,7 @@ public class TestifyFixture : IAsyncLifetime, IDisposable
 
     public IQuizRepository QuizRepository { get; }
     public IQuestionRepository QuestionRepository { get; }
+    public IAnswerRepository AnswerRepository { get; }
     public IMediator Mediator { get; }
 
 
@@ -29,6 +30,7 @@ public class TestifyFixture : IAsyncLifetime, IDisposable
 
         services.AddScoped<IQuizRepository, QuizRepository>();
         services.AddScoped<IQuestionRepository, QuestionRepository>();
+        services.AddScoped<IAnswerRepository, AnswerRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddApplication();
 
@@ -38,6 +40,7 @@ public class TestifyFixture : IAsyncLifetime, IDisposable
 
         QuizRepository = scope.ServiceProvider.GetRequiredService<IQuizRepository>();
         QuestionRepository = scope.ServiceProvider.GetRequiredService<IQuestionRepository>();
+        AnswerRepository = scope.ServiceProvider.GetRequiredService<IAnswerRepository>();
         Mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
     }
 

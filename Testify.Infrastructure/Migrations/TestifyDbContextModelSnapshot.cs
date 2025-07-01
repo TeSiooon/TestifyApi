@@ -174,7 +174,7 @@ namespace Testify.Infrastructure.Migrations
 
                     b.HasIndex("QuestionId");
 
-                    b.ToTable("Answers");
+                    b.ToTable("Answers", (string)null);
                 });
 
             modelBuilder.Entity("Testify.Domain.Entities.Comment", b =>
@@ -200,7 +200,7 @@ namespace Testify.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("Testify.Domain.Entities.Question", b =>
@@ -221,7 +221,7 @@ namespace Testify.Infrastructure.Migrations
 
                     b.HasIndex("QuizId");
 
-                    b.ToTable("Questions");
+                    b.ToTable("Questions", (string)null);
                 });
 
             modelBuilder.Entity("Testify.Domain.Entities.Quiz", b =>
@@ -259,7 +259,7 @@ namespace Testify.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Quizzes");
+                    b.ToTable("Quizzes", (string)null);
                 });
 
             modelBuilder.Entity("Testify.Domain.Entities.User", b =>
@@ -358,7 +358,7 @@ namespace Testify.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserQuizResults");
+                    b.ToTable("UserQuizResults", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
