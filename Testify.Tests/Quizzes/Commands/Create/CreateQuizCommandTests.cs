@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using FluentValidation;
+using Testify.Application.Dtos;
 using Testify.Application.Quizzes.Command.Create;
 using Testify.Domain.Constants;
 

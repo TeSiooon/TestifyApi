@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Testify.Application.Quizzes.Command.Create;
 using Testify.Application.Quizzes.Command.Delete;
+using Testify.Application.Quizzes.Command.Update;
 using Testify.Application.Quizzes.Queries.GetAllQuizzes;
 using Testify.Application.Quizzes.Queries.GetQuizById;
 using Testify.Application.ViewModels;
@@ -37,5 +38,11 @@ public class QuizController(IMediator mediator) : ControllerBase
     public async Task<ActionResult> DeleteQuizAsync([FromRoute] Guid id)
     {
         return Ok(await mediator.Send(new DeleteQuizCommand(id)));
+    }
+
+    [HttpPatch]
+    public async Task<ActionResult> UpdateQuizAsync([FromBody] UpdateQuizCommand command)
+    {
+        return Ok(await mediator.Send(command));
     }
 }

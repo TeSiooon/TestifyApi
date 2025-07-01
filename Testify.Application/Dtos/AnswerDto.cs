@@ -1,6 +1,6 @@
-﻿namespace Testify.Application.Quizzes.Command.Create;
+﻿namespace Testify.Application.Dtos;
 
-public class AnswerDto
+public record AnswerDto
 {
     public string Text { get; set; } = default!;
     public bool IsCorrect { get; set; }

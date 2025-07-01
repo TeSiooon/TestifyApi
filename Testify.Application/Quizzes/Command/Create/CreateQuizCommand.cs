@@ -1,12 +1,13 @@
 ﻿using MediatR;
 using Testify.Application.Common;
+using Testify.Application.Dtos;
 using Testify.Domain.Constants;
 using Testify.Domain.Entities;
 using Testify.Domain.Repositories;
 
 namespace Testify.Application.Quizzes.Command.Create;
 
-public class CreateQuizCommand : IRequest<Guid>
+public record CreateQuizCommand : IRequest<Guid>
 {
     public string Title { get; set; } = default!;
     public string Description { get; set; } = default!;

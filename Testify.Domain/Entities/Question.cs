@@ -2,7 +2,7 @@
 
 public class Question
 {
-    private readonly List<Answer> answers = new();
+private readonly List<Answer> answers = new List<Answer>();
     private Question()
     {
         // For ORM
@@ -37,5 +37,9 @@ public class Question
     public void AddAnswer(Answer answer)
     {
         answers.Add(answer);
+    }
+    public void RemoveAnswer(Answer answer)
+    {
+        answers.Remove(answer);
     }
 }

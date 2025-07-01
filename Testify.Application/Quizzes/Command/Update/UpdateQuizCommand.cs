@@ -5,7 +5,7 @@ using Testify.Domain.Repositories;
 
 namespace Testify.Application.Quizzes.Command.Update;
 
-public class UpdateQuizCommand : IRequest<Unit>
+public record UpdateQuizCommand : IRequest<Unit>
 {
     public Guid Id { get; set; }
     public string Title { get; set; } = default!;
