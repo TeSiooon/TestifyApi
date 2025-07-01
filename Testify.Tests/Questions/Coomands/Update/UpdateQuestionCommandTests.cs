@@ -3,7 +3,6 @@ using FluentValidation;
 using Testify.Application.Dtos;
 using Testify.Application.Questions.Command.Update;
 using Testify.IntegrationTests.Helpers;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Testify.IntegrationTests.Questions.Coomands.Update;
 

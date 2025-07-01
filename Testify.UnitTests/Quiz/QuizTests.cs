@@ -1,5 +1,4 @@
 ﻿using Testify.Domain.Constants;
-using Testify.Domain.Entities;
 
 namespace Testify.UnitTests.Quiz;
 
