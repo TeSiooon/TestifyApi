@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Testify.Application.Questions.Command.AddQuestionToQuiz;
 using Testify.Application.Questions.Command.Delete;
 using Testify.Application.Questions.Command.Update;
-using Testify.Application.Quizzes.Command.Update;
 
 namespace Testify.API.Controllers;
 

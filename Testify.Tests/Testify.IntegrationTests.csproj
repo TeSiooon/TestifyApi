@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Testify.Application\Testify.Application.csproj" />
+    <ProjectReference Include="..\Testify.Common\Testify.Common.csproj" />
     <ProjectReference Include="..\Testify.Infrastructure\Testify.Infrastructure.csproj" />
   </ItemGroup>
 
