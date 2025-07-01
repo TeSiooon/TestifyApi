@@ -38,4 +38,9 @@ public class Question
     {
         answers.Add(answer);
     }
+
+    public void ClearAnswers()
+    {
+        answers.Clear();
+    }
 }

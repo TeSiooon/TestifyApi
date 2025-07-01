@@ -63,7 +63,8 @@ public class QuizRepository : IQuizRepository
 
     public Task Update(Quiz entity)
     {
-        throw new NotImplementedException();
+        dbContext.Quizzes.Update(entity);
+        return Task.CompletedTask;
     }
 
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)

@@ -1,6 +1,6 @@
-﻿namespace Testify.Application.Quizzes.Command.Create;
+﻿namespace Testify.Application.Dtos;
 
-public class QuestionDto
+public record QuestionDto
 {
     public string Text { get; set; } = default!;
     public List<AnswerDto> Answers { get; set; } = [];

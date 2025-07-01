@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-using Microsoft.OpenApi.Models;
+﻿using Microsoft.OpenApi.Models;
 using Testify.API.Converters;
 using Testify.API.Middlewares;
 
@@ -42,6 +41,7 @@ public static class WebApplicationBuilderExtensions
 
             c.SwaggerDoc("Quizzes", new OpenApiInfo { Title = "Quiz API", Version = "v1" });
             c.SwaggerDoc("Identity", new OpenApiInfo { Title = "Identity API", Version = "v1" });
+            c.SwaggerDoc("Questions", new OpenApiInfo { Title = "Question API", Version = "v1" });
 
             c.DocInclusionPredicate((docName, apiDesc) =>
             {

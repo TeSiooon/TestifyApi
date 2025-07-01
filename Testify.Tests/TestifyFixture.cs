@@ -15,6 +15,7 @@ public class TestifyFixture : IAsyncLifetime, IDisposable
     private readonly IServiceScope scope;
 
     public IQuizRepository QuizRepository { get; }
+    public IQuestionRepository QuestionRepository { get; }
     public IMediator Mediator { get; }
 
 
@@ -27,6 +28,7 @@ public class TestifyFixture : IAsyncLifetime, IDisposable
             opts.UseInMemoryDatabase($"TestifyDb_{Guid.NewGuid()}"));
 
         services.AddScoped<IQuizRepository, QuizRepository>();
+        services.AddScoped<IQuestionRepository, QuestionRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddApplication();
 
@@ -35,6 +37,7 @@ public class TestifyFixture : IAsyncLifetime, IDisposable
         scope = provider.CreateScope();
 
         QuizRepository = scope.ServiceProvider.GetRequiredService<IQuizRepository>();
+        QuestionRepository = scope.ServiceProvider.GetRequiredService<IQuestionRepository>();
         Mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
     }
 
