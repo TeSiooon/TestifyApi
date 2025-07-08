@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Testify.Application.Quizzes.Command.Create;
 using Testify.Application.Quizzes.Command.Delete;
@@ -12,7 +13,7 @@ namespace Testify.API.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 [ApiExplorerSettings(GroupName = "Quizzes")]
-//[Authorize]
+[Authorize]
 public class QuizController(IMediator mediator) : ControllerBase
 {
     [HttpPost]

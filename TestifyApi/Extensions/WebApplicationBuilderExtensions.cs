@@ -1,4 +1,5 @@
 ﻿using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using Testify.API.Converters;
 using Testify.API.Middlewares;
 
@@ -42,6 +43,7 @@ public static class WebApplicationBuilderExtensions
             c.SwaggerDoc("Quizzes", new OpenApiInfo { Title = "Quiz API", Version = "v1" });
             c.SwaggerDoc("Identity", new OpenApiInfo { Title = "Identity API", Version = "v1" });
             c.SwaggerDoc("Questions", new OpenApiInfo { Title = "Question API", Version = "v1" });
+            c.SwaggerDoc("QuizAttempts", new OpenApiInfo { Title = "QuizAttempt API", Version = "v1" });
             c.SwaggerDoc("Enums", new OpenApiInfo { Title = "Enum API", Version = "v1" });
 
             c.DocInclusionPredicate((docName, apiDesc) =>
@@ -52,9 +54,38 @@ public static class WebApplicationBuilderExtensions
             });
 
             c.SchemaFilter<TimeSpanSchemaFilter>();
+            c.OperationFilter<AddEndpointUrlOperationFilter>();
 
         });
 
         builder.Services.AddScoped<ErrorHandlingMiddleware>();
+    }
+}
+
+
+// for tests maybe save for later
+public class AddEndpointUrlOperationFilter : IOperationFilter
+{
+    private readonly string _swaggerBasePath;
+
+    public AddEndpointUrlOperationFilter(string swaggerBasePath = "")
+    {
+        _swaggerBasePath = swaggerBasePath;
+    }
+
+    public void Apply(OpenApiOperation operation, OperationFilterContext context)
+    {
+        // Pobieramy ścieżkę (np. /api/Questions/{id})
+        var route = context.ApiDescription.RelativePath;
+
+        // Budujemy pełny URL — tu możesz dopasować swój swaggerBasePath (np. /swagger/v1)
+        var fullUrl = $"{_swaggerBasePath}/{route}";
+
+        var linkMarkdown = $"**Endpoint URL:** [{fullUrl}]({fullUrl})";
+
+        if (operation.Description == null)
+            operation.Description = linkMarkdown;
+        else
+            operation.Description += "\n\n" + linkMarkdown;
     }
 }
