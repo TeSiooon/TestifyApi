@@ -28,7 +28,8 @@ public class UserQuizAttemptRepository : IUserQuizAttemptRepository
     public async Task<UserQuizAttempt?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         return await dbContext.UserQuizAttempts
-            .FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
+            .Include(ua => ua.Answers)
+            .FirstOrDefaultAsync(a => a.Id == id, cancellationToken) ?? throw new KeyNotFoundException();
     }
 
     public async Task<UserQuizAttempt?> GetWithAnswersAsync(Guid attemptId, CancellationToken cancellationToken)
@@ -50,7 +51,6 @@ public class UserQuizAttemptRepository : IUserQuizAttemptRepository
 
     public Task AddAnswerAsync(UserAnswer answer, CancellationToken ct)
     {
-        // od razu rejestrujemy UserAnswer w DbContext
         return dbContext.UserAnswers.AddAsync(answer, ct).AsTask();
     }
 }

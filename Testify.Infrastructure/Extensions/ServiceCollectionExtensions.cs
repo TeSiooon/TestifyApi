@@ -29,6 +29,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IQuestionRepository, QuestionRepository>();
         services.AddScoped<IAnswerRepository, AnswerRepository>();
         services.AddScoped<IUserQuizAttemptRepository, UserQuizAttemptRepository>();
+        services.AddScoped<IUserQuizResultRepository, UserQuizResultRepository>();
 
         services.AddHttpContextAccessor();
         services.AddScoped<ICurrentUserService, CurrentUserService>();

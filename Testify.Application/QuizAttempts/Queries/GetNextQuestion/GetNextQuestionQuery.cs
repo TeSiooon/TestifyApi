@@ -21,7 +21,7 @@ public record GetNextQuestionQuery(Guid AttemptId) : IRequest<QuestionVm>
             var answeredIds = attempt.Answers.Select(ua => ua.QuestionId).ToHashSet();
             var next = attempt.Quiz.Questions.FirstOrDefault(q => !answeredIds.Contains(q.Id));
 
-            return QuestionVm.From(next);
+            return QuestionVm.FromNullable(next);
         }
     }
 }
