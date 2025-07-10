@@ -18,6 +18,8 @@ public class TestifyDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid
     public DbSet<Question> Questions { get; set; }
     public DbSet<Comment> Comments { get; set; }
     public DbSet<Answer> Answers { get; set; }
+    public DbSet<UserAnswer> UserAnswers { get; set; }
+    public DbSet<UserQuizAttempt> UserQuizAttempts { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

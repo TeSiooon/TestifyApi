@@ -24,7 +24,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testify.Infrastructure", "T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testify.IntegrationTests", "Testify.Tests\Testify.IntegrationTests.csproj", "{9EA7E22B-8A86-41ED-BF6B-993FEFF25B1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testify.UnitTests", "Testify.UnitTests\Testify.UnitTests.csproj", "{D14CE8FB-9A60-48DD-B49C-396B2C1525FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testify.UnitTests", "Testify.UnitTests\Testify.UnitTests.csproj", "{D14CE8FB-9A60-48DD-B49C-396B2C1525FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testify.Common", "Testify.Common\Testify.Common.csproj", "{70CBDB72-37CB-442B-B0F3-38B379F019A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,6 +58,10 @@ Global
 		{D14CE8FB-9A60-48DD-B49C-396B2C1525FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D14CE8FB-9A60-48DD-B49C-396B2C1525FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D14CE8FB-9A60-48DD-B49C-396B2C1525FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70CBDB72-37CB-442B-B0F3-38B379F019A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70CBDB72-37CB-442B-B0F3-38B379F019A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70CBDB72-37CB-442B-B0F3-38B379F019A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70CBDB72-37CB-442B-B0F3-38B379F019A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

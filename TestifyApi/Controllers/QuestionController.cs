@@ -1,15 +1,16 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Testify.Application.Questions.Command.AddQuestionToQuiz;
 using Testify.Application.Questions.Command.Delete;
 using Testify.Application.Questions.Command.Update;
-using Testify.Application.Quizzes.Command.Update;
 
 namespace Testify.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
 [ApiExplorerSettings(GroupName = "Questions")]
+[Authorize]
 public class QuestionController(IMediator mediator) : ControllerBase
 {
     [HttpPost]

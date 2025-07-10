@@ -7,6 +7,7 @@ using Testify.Domain.Entities;
 using Testify.Domain.Repositories;
 using Testify.Infrastructure.Persistance;
 using Testify.Infrastructure.Repositories;
+using Testify.Infrastructure.Services;
 
 namespace Testify.Infrastructure.Extensions;
 
@@ -27,5 +28,10 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IQuizRepository, QuizRepository>();
         services.AddScoped<IQuestionRepository, QuestionRepository>();
         services.AddScoped<IAnswerRepository, AnswerRepository>();
+        services.AddScoped<IUserQuizAttemptRepository, UserQuizAttemptRepository>();
+        services.AddScoped<IUserQuizResultRepository, UserQuizResultRepository>();
+
+        services.AddHttpContextAccessor();
+        services.AddScoped<ICurrentUserService, CurrentUserService>();
     }
 }

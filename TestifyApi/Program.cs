@@ -14,6 +14,17 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddScoped<UserSeeder>();
 
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:3000")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -23,6 +34,8 @@ using (var scope = app.Services.CreateScope())
     var seeder = scope.ServiceProvider.GetRequiredService<UserSeeder>();
     await seeder.SeedUsersAsync();
 }
+
+app.UseCors("AllowFrontend");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -34,6 +47,8 @@ if (app.Environment.IsDevelopment())
         c.SwaggerEndpoint("/swagger/Identity/swagger.json", "Identity API");
         c.SwaggerEndpoint("/swagger/Quizzes/swagger.json", "Quiz API");
         c.SwaggerEndpoint("/swagger/Questions/swagger.json", "Question API");
+        c.SwaggerEndpoint("/swagger/QuizAttempts/swagger.json", "QuizAttempt API");
+        c.SwaggerEndpoint("/swagger/Enums/swagger.json", "Enum API");
         c.InjectStylesheet("/custom.css");
     });
 }

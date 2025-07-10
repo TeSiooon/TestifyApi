@@ -20,6 +20,6 @@ public static class ServiceCollectionExtensions
 
         //services.AddScoped<IUserContext, UserContext>();
 
-        services.AddHttpContextAccessor();
+        //services.AddHttpContextAccessor();
     }
 }

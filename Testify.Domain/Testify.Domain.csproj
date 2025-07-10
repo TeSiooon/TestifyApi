@@ -11,8 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Common\" />
     <Folder Include="Interfaces\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Testify.Common\Testify.Common.csproj" />
   </ItemGroup>
 
 </Project>
