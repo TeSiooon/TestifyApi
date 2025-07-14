@@ -2,10 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Quartz;
 using Testify.Application.Common;
 using Testify.Domain.Entities;
 using Testify.Domain.Repositories;
 using Testify.Infrastructure.Persistance;
+using Testify.Infrastructure.Quartz;
+using Testify.Infrastructure.Quartz.Jobs;
 using Testify.Infrastructure.Repositories;
 using Testify.Infrastructure.Services;
 
@@ -33,5 +36,7 @@ public static class ServiceCollectionExtensions
 
         services.AddHttpContextAccessor();
         services.AddScoped<ICurrentUserService, CurrentUserService>();
+
+        services.AddQuartzConfigurationAndJobs();
     }
 }
