@@ -10,4 +10,5 @@ public interface IUserQuizAttemptRepository
     Task<UserQuizAttempt?> GetWithQuizAndAnswersAsync(Guid attemptId, CancellationToken cancellationToken = default);
     Task<UserQuizAttempt?> GetWithAnswersAsync(Guid attemptId, CancellationToken cancellationToken = default);
     Task AddAnswerAsync(UserAnswer answer, CancellationToken cancellationToken = default);
+    Task<List<UserQuizAttempt>> GetAllOpenAttemptsWithQuizAsync(CancellationToken cancellationToken = default);
 }

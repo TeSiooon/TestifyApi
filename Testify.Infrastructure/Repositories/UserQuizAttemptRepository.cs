@@ -53,4 +53,15 @@ public class UserQuizAttemptRepository : IUserQuizAttemptRepository
     {
         return dbContext.UserAnswers.AddAsync(answer, ct).AsTask();
     }
+
+    public async Task<List<UserQuizAttempt>> GetAllOpenAttemptsWithQuizAsync(CancellationToken cancellationToken = default)
+    {
+        var now = DateTime.UtcNow;
+        var cutOff = now.AddHours(-24);
+
+        return await dbContext.UserQuizAttempts
+            .Include(a => a.Quiz)
+            .Where(a => a.StartedAt >= cutOff && a.FinishedAt == null)
+            .ToListAsync(cancellationToken);
+    }
 }
