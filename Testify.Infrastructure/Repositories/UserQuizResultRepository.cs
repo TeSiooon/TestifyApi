@@ -26,4 +26,13 @@ public class UserQuizResultRepository : IUserQuizResultRepository
 
         return result;
     }
+
+    public async Task<UserQuizResult> GetUserQuizResultAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        return await dbContext.UserQuizResults
+            .Include(x => x.Quiz)
+            .ThenInclude(q => q.Questions)
+            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken) 
+            ?? throw new KeyNotFoundException($"UserQuizResult with ID {id} not found.");
+    }
 }

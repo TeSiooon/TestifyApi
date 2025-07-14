@@ -5,6 +5,7 @@ using Testify.Application.QuizAttempts.Command.Finish;
 using Testify.Application.QuizAttempts.Command.Start;
 using Testify.Application.QuizAttempts.Command.Submit;
 using Testify.Application.QuizAttempts.Queries.GetNextQuestion;
+using Testify.Application.QuizAttempts.Queries.GetQuizAttemptResult;
 
 namespace Testify.API.Controllers;
 
@@ -44,7 +45,12 @@ public class QuizAttemptController(IMediator mediator) : ControllerBase
     [HttpPost("{attemptId}/finish")]
     public async Task<IActionResult> FinishAttempt([FromRoute] Guid attemptId)
     {
-        await mediator.Send(new FinishAttemptCommand(attemptId));
-        return NoContent();
+        return Ok(await mediator.Send(new FinishAttemptCommand(attemptId)));
+    }
+
+    [HttpGet("{resultId}/result")]
+    public async Task<IActionResult> GetAttemptResultAsync([FromRoute] Guid resultId)
+    {
+        return Ok(await mediator.Send(new GetQuizAttemptResultQuery(resultId)));
     }
 }

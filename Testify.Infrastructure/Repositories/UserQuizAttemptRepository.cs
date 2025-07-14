@@ -29,6 +29,7 @@ public class UserQuizAttemptRepository : IUserQuizAttemptRepository
     {
         return await dbContext.UserQuizAttempts
             .Include(ua => ua.Answers)
+            .ThenInclude(sa=> sa.SelectedAnswer)
             .FirstOrDefaultAsync(a => a.Id == id, cancellationToken) ?? throw new KeyNotFoundException();
     }
 

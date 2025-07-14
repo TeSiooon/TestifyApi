@@ -1,7 +1,5 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Testify.Application.Common;
-using Testify.Application.ViewModels;
 using Testify.Domain.Entities;
 using Testify.Domain.Repositories;
 

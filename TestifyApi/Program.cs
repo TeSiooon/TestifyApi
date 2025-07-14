@@ -12,6 +12,7 @@ builder.AddPresentation();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddScoped<UserSeeder>();
+builder.Services.AddScoped<QuizSeeder>();
 
 
 builder.Services.AddCors(options =>
@@ -32,7 +33,9 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<TestifyDbContext>();
     db.Database.Migrate();
     var seeder = scope.ServiceProvider.GetRequiredService<UserSeeder>();
+    var quizSeeder = scope.ServiceProvider.GetRequiredService<QuizSeeder>();
     await seeder.SeedUsersAsync();
+    await quizSeeder.SeedQuizzesAsync();
 }
 
 app.UseCors("AllowFrontend");

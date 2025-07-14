@@ -6,6 +6,7 @@ using Testify.Application.Quizzes.Command.Delete;
 using Testify.Application.Quizzes.Command.Update;
 using Testify.Application.Quizzes.Queries.GetAllQuizzes;
 using Testify.Application.Quizzes.Queries.GetQuizById;
+using Testify.Application.Quizzes.Queries.GetTopQuizzesQuery;
 using Testify.Application.ViewModels;
 
 namespace Testify.API.Controllers;
@@ -45,5 +46,12 @@ public class QuizController(IMediator mediator) : ControllerBase
     public async Task<ActionResult> UpdateQuizAsync([FromBody] UpdateQuizCommand command)
     {
         return Ok(await mediator.Send(command));
+    }
+
+    [AllowAnonymous]
+    [HttpGet("top")]
+    public async Task<ActionResult<IEnumerable<QuizVm>>> GetTopQuizzesAsync()
+    {
+        return Ok(await mediator.Send(new GetTopQuizzesQuery()));
     }
 }

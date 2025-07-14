@@ -80,4 +80,12 @@ public class QuizRepository : IQuizRepository
 
         return quizzes;
     }
+
+    public async Task<List<Quiz>> GetTopQuizzesAsync(int count, CancellationToken cancellationToken = default)
+    {
+        return await dbContext.Quizzes
+            .OrderBy(q => Guid.NewGuid()) // Random order
+            .Take(count)
+            .ToListAsync(cancellationToken);
+    }
 }
