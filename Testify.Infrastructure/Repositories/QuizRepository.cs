@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using Testify.Application.Abstractions.Repositories;
 using Testify.Domain.Constants;
 using Testify.Domain.Entities;
-using Testify.Domain.Repositories;
 using Testify.Infrastructure.Persistance;
 
 namespace Testify.Infrastructure.Repositories;

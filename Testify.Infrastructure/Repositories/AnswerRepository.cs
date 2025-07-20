@@ -1,5 +1,5 @@
-﻿using Testify.Domain.Entities;
-using Testify.Domain.Repositories;
+﻿using Testify.Application.Abstractions.Repositories;
+using Testify.Domain.Entities;
 using Testify.Infrastructure.Persistance;
 
 namespace Testify.Infrastructure.Repositories;

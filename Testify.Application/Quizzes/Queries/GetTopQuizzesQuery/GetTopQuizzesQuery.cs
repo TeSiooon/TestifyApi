@@ -1,6 +1,6 @@
 ﻿using MediatR;
+using Testify.Application.Abstractions.Repositories;
 using Testify.Application.ViewModels;
-using Testify.Domain.Repositories;
 
 namespace Testify.Application.Quizzes.Queries.GetTopQuizzesQuery;
 

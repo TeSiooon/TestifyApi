@@ -1,6 +1,6 @@
 ﻿using MediatR;
+using Testify.Application.Abstractions.Repositories;
 using Testify.Application.Common;
-using Testify.Domain.Repositories;
 
 namespace Testify.Application.Questions.Command.Delete;
 
