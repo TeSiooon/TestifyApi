@@ -14,20 +14,20 @@ namespace Testify.API.Controllers;
 public class QuestionController(IMediator mediator) : ControllerBase
 {
     [HttpPost]
-    public async Task<ActionResult> AddQuestionToQuizAsync([FromBody] AddQuestionToQuizCommand command)
+    public async Task<ActionResult> AddQuestionToQuizAsync([FromBody] AddQuestionToQuizCommand command, CancellationToken cancellationToken)
     {
-        return Ok(await mediator.Send(command));
+        return Ok(await mediator.Send(command, cancellationToken));
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult> DeleteQuestionFromQuizAsync([FromRoute] Guid id)
+    public async Task<ActionResult> DeleteQuestionFromQuizAsync([FromRoute] Guid id, CancellationToken cancellationToken)
     {
-        return Ok(await mediator.Send(new DeleteQuestionCommand(id)));
+        return Ok(await mediator.Send(new DeleteQuestionCommand(id), cancellationToken));
     }
 
     [HttpPatch]
-    public async Task<ActionResult> UpdateQuestionAsync([FromBody] UpdateQuestionCommand command)
+    public async Task<ActionResult> UpdateQuestionAsync([FromBody] UpdateQuestionCommand command, CancellationToken cancellationToken)
     {
-        return Ok(await mediator.Send(command));
+        return Ok(await mediator.Send(command, cancellationToken));
     }
 }

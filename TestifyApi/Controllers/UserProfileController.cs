@@ -11,8 +11,8 @@ namespace Testify.API.Controllers;
 public class UserProfileController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> GetUserProfileAsync()
+    public async Task<IActionResult> GetUserProfileAsync(CancellationToken cancellationToken)
     {
-        return Ok(await mediator.Send(new GetUserProfileQuery()));
+        return Ok(await mediator.Send(new GetUserProfileQuery(), cancellationToken));
     }
 }
