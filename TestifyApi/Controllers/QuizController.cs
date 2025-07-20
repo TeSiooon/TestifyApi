@@ -24,6 +24,7 @@ public class QuizController(IMediator mediator) : ControllerBase
         return Ok(quizId);
     }
 
+    [AllowAnonymous]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<QuizVm>>> GetAllMatchingQuizzes([FromQuery] GetAllQuizzesQuery query)
     {

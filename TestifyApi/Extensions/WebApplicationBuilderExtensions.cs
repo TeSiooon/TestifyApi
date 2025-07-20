@@ -44,6 +44,7 @@ public static class WebApplicationBuilderExtensions
             c.SwaggerDoc("Identity", new OpenApiInfo { Title = "Identity API", Version = "v1" });
             c.SwaggerDoc("Questions", new OpenApiInfo { Title = "Question API", Version = "v1" });
             c.SwaggerDoc("QuizAttempts", new OpenApiInfo { Title = "QuizAttempt API", Version = "v1" });
+            c.SwaggerDoc("UserProfile", new OpenApiInfo { Title = "UserProfile API", Version = "v1" });
             c.SwaggerDoc("Enums", new OpenApiInfo { Title = "Enum API", Version = "v1" });
 
             c.DocInclusionPredicate((docName, apiDesc) =>

@@ -26,11 +26,11 @@ public class QuizSeeder
         if (existingQuizzes)
             return;
 
-        for (int i = 1; i <= 6; i++)
+        for (int i = 1; i <= 15; i++)
         {
             var command = new CreateQuizCommand
             {
-                Title = "Sample Quiz",
+                Title = $"Sample Quiz {i}",
                 Description = "This is a sample quiz for testing purposes.",
                 Category = Domain.Constants.QuizCategoryType.GeneralKnowledge,
                 IsPrivate = false,

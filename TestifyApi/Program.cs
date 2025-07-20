@@ -51,6 +51,7 @@ if (app.Environment.IsDevelopment())
         c.SwaggerEndpoint("/swagger/Quizzes/swagger.json", "Quiz API");
         c.SwaggerEndpoint("/swagger/Questions/swagger.json", "Question API");
         c.SwaggerEndpoint("/swagger/QuizAttempts/swagger.json", "QuizAttempt API");
+        c.SwaggerEndpoint("/swagger/UserProfile/swagger.json", "UserProfile API");
         c.SwaggerEndpoint("/swagger/Enums/swagger.json", "Enum API");
         c.InjectStylesheet("/custom.css");
     });
