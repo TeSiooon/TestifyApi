@@ -1,10 +1,12 @@
-﻿namespace Testify.Domain.Entities;
+﻿using Testify.Common.Entities;
 
-public class UserAnswer
+namespace Testify.Domain.Entities;
+
+public class UserAnswer : AuditableEntity
 {
     private UserAnswer()
     {
-        
+        // For ORM
     }
 
     public UserAnswer(Guid userQuizAttemptId, Guid questionId, Guid selectedAnswerId)
@@ -16,7 +18,6 @@ public class UserAnswer
         CreatedAt = DateTime.UtcNow;
     }
 
-    public Guid Id { get; set; } = Guid.NewGuid();
 
     public Guid UserQuizAttemptId { get; set; }
     public UserQuizAttempt UserQuizAttempt { get; set; }
@@ -26,8 +27,6 @@ public class UserAnswer
 
     public Guid SelectedAnswerId { get; set; }
     public Answer SelectedAnswer { get; set; }
-
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     public static UserAnswer Create(Guid userQuizAttemptId, Guid questionId, Guid selectedAnswerId)
     {

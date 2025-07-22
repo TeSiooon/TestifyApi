@@ -1,6 +1,8 @@
-﻿namespace Testify.Domain.Entities;
+﻿using Testify.Common.Entities;
 
-public class UserQuizResult
+namespace Testify.Domain.Entities;
+
+public class UserQuizResult : AuditableEntity
 {
     private UserQuizResult() 
     {
@@ -17,7 +19,6 @@ public class UserQuizResult
         CompletedDate = completedDate;
     }
 
-    public Guid Id { get; set; }
     public Guid UserId { get; private set; }
     public User User { get; private set; }
 

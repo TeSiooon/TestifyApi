@@ -1,6 +1,8 @@
-﻿namespace Testify.Domain.Entities;
+﻿using Testify.Common.Entities;
 
-public class Answer
+namespace Testify.Domain.Entities;
+
+public class Answer : AuditableEntity
 {
     private Answer()
     {
@@ -14,7 +16,6 @@ public class Answer
         IsCorrect = isCorrect;
     }
 
-    public Guid Id { get; set; }
     public string Text { get; private set; } = default!;
     public bool IsCorrect { get; private set; }
 
