@@ -118,5 +118,5 @@ public class TestifyFixture : IAsyncLifetime, IDisposable
         var httpContextAccessor = scope.ServiceProvider.GetRequiredService<IHttpContextAccessor>();
         httpContextAccessor.HttpContext = HttpContextHelper.PrepareTestHttpContext(userId, userName, email);
     }
-    public async Task<User> GetTestUserAsync() => await UserManager.FindByEmailAsync("test@example.com");
+    public async Task<User> GetTestUserAsync() => await UserManager.FindByEmailAsync("test@example.com") ?? throw new KeyNotFoundException();
 }

@@ -18,12 +18,12 @@ public class Comment : AuditableEntity
     }
 
     public Guid UserId { get; private set; }
-    public User User { get; private set; }
+    public User User { get; private set; } = default!;
 
     public Guid QuizId { get; private set; }
-    public Quiz Quiz { get; private set; }
+    public Quiz Quiz { get; private set; } = default!;
 
-    public string Content { get; private set; }
+    public string Content { get; private set; } = default!;
 
 
     public static Comment Create(Guid userId, Guid quizId, string content)

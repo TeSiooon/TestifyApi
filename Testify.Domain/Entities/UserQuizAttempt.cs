@@ -19,10 +19,10 @@ public class UserQuizAttempt : AuditableEntity
     }
 
     public Guid UserId { get; set; }
-    public User User { get; set; }
+    public User User { get; set; } = default!;
 
     public Guid QuizId { get; set; }
-    public Quiz Quiz { get; set; }
+    public Quiz Quiz { get; set; } = default!;
 
     public DateTime StartedAt { get; set; } = DateTime.UtcNow;
     public DateTime? FinishedAt { get; set; }

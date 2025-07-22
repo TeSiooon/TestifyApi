@@ -20,13 +20,13 @@ public class UserAnswer : AuditableEntity
 
 
     public Guid UserQuizAttemptId { get; set; }
-    public UserQuizAttempt UserQuizAttempt { get; set; }
+    public UserQuizAttempt UserQuizAttempt { get; set; } = default!;
 
     public Guid QuestionId { get; set; }
-    public Question Question { get; set; }
+    public Question Question { get; set; } = default!;
 
     public Guid SelectedAnswerId { get; set; }
-    public Answer SelectedAnswer { get; set; }
+    public Answer SelectedAnswer { get; set; } = default!;
 
     public static UserAnswer Create(Guid userQuizAttemptId, Guid questionId, Guid selectedAnswerId)
     {

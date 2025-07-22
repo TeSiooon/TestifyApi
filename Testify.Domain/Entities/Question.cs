@@ -19,8 +19,8 @@ private readonly List<Answer> answers = new List<Answer>();
         Text = text;
     }
 
-    public Guid QuizId { get; private set; }
-    public Quiz Quiz { get; private set; }
+    public Guid QuizId { get; private set; } = default!;
+    public Quiz Quiz { get; private set; } = default!;
 
     public ICollection<Answer> Answers => answers.AsReadOnly();
 

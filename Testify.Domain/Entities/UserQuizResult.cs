@@ -20,10 +20,10 @@ public class UserQuizResult : AuditableEntity
     }
 
     public Guid UserId { get; private set; }
-    public User User { get; private set; }
+    public User User { get; private set; } = default!;
 
     public Guid QuizId { get; private set; }
-    public Quiz Quiz { get; private set; }
+    public Quiz Quiz { get; private set; } = default!;
 
     public int Score { get; private set; }
     public int Attempts { get; private set; }
