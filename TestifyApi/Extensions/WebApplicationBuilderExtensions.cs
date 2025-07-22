@@ -1,5 +1,6 @@
 ﻿using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Threading.RateLimiting;
 using Testify.API.Converters;
 using Testify.API.Middlewares;
 
@@ -60,6 +61,32 @@ public static class WebApplicationBuilderExtensions
         });
 
         builder.Services.AddScoped<ErrorHandlingMiddleware>();
+
+        builder.Services.AddRateLimiter(options =>
+        {
+            options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
+            {
+                var ip = httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
+
+                return RateLimitPartition.GetFixedWindowLimiter(
+                    partitionKey: ip,
+                    factory: _ => new FixedWindowRateLimiterOptions
+                    {
+                        PermitLimit = 10,
+                        Window = TimeSpan.FromSeconds(30),
+                        QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+                        QueueLimit = 0
+                    });
+            });
+
+            options.OnRejected = async (context, token) =>
+            {
+                context.HttpContext.Response.StatusCode = 429;
+                context.HttpContext.Response.ContentType = "application/json";
+                await context.HttpContext.Response.WriteAsync(
+                    "{\"error\":\"Too many requests. Please try again later.\"}", token);
+            };
+        });
     }
 }
 
