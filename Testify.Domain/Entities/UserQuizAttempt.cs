@@ -1,6 +1,8 @@
-﻿namespace Testify.Domain.Entities;
+﻿using Testify.Common.Entities;
 
-public class UserQuizAttempt
+namespace Testify.Domain.Entities;
+
+public class UserQuizAttempt : AuditableEntity
 {
     private readonly List<UserAnswer> answers = new();
 
@@ -16,13 +18,11 @@ public class UserQuizAttempt
         StartedAt = DateTime.UtcNow;
     }
 
-    public Guid Id { get; set; } = Guid.NewGuid();
-
     public Guid UserId { get; set; }
-    public User User { get; set; }
+    public User User { get; set; } = default!;
 
     public Guid QuizId { get; set; }
-    public Quiz Quiz { get; set; }
+    public Quiz Quiz { get; set; } = default!;
 
     public DateTime StartedAt { get; set; } = DateTime.UtcNow;
     public DateTime? FinishedAt { get; set; }

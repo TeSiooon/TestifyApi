@@ -1,8 +1,9 @@
-﻿using Testify.Domain.Constants;
+﻿using Testify.Common.Entities;
+using Testify.Domain.Constants;
 
 namespace Testify.Domain.Entities;
 
-public class Quiz
+public class Quiz : AuditableEntity
 {
     private readonly List<Question> questions = new();
     private Quiz() 
@@ -22,7 +23,6 @@ public class Quiz
         TimeLimit = timeLimit;
     }
 
-    public Guid Id { get; set; }
     public string Title { get; set; } = default!;
     public string Description { get; set; } = default!;
     public QuizCategoryType Category { get; set; }

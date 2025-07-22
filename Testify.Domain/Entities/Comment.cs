@@ -1,6 +1,8 @@
-﻿namespace Testify.Domain.Entities;
+﻿using Testify.Common.Entities;
 
-public class Comment
+namespace Testify.Domain.Entities;
+
+public class Comment : AuditableEntity
 {
     private Comment() 
     { 
@@ -15,14 +17,13 @@ public class Comment
         Content = content ?? throw new ArgumentNullException(nameof(content));
     }
 
-    public Guid Id { get; set; }
     public Guid UserId { get; private set; }
-    public User User { get; private set; }
+    public User User { get; private set; } = default!;
 
     public Guid QuizId { get; private set; }
-    public Quiz Quiz { get; private set; }
+    public Quiz Quiz { get; private set; } = default!;
 
-    public string Content { get; private set; }
+    public string Content { get; private set; } = default!;
 
 
     public static Comment Create(Guid userId, Guid quizId, string content)

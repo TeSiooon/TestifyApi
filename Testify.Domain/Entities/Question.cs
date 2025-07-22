@@ -1,6 +1,8 @@
-﻿namespace Testify.Domain.Entities;
+﻿using Testify.Common.Entities;
 
-public class Question
+namespace Testify.Domain.Entities;
+
+public class Question : AuditableEntity
 {
 private readonly List<Answer> answers = new List<Answer>();
     private Question()
@@ -8,7 +10,6 @@ private readonly List<Answer> answers = new List<Answer>();
         // For ORM
     }
 
-    public Guid Id { get; set; }
     public string Text { get; set; } = default!;
 
     public Question(Guid quizId, string text)
@@ -18,8 +19,8 @@ private readonly List<Answer> answers = new List<Answer>();
         Text = text;
     }
 
-    public Guid QuizId { get; private set; }
-    public Quiz Quiz { get; private set; }
+    public Guid QuizId { get; private set; } = default!;
+    public Quiz Quiz { get; private set; } = default!;
 
     public ICollection<Answer> Answers => answers.AsReadOnly();
 

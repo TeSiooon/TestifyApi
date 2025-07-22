@@ -13,9 +13,20 @@ public class CurrentUserService : ICurrentUserService
         this.httpContextAccessor = httpContextAccessor;
     }
 
-    public Guid UserId =>
-        Guid.Parse(httpContextAccessor.HttpContext!
-                          .User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+    public Guid UserId
+    {
+        get
+        {
+            var userIdClaim = httpContextAccessor.HttpContext?
+                .User?
+                .FindFirst(ClaimTypes.NameIdentifier)?
+                .Value;
+
+            return Guid.TryParse(userIdClaim, out var userId)
+                ? userId
+                : Guid.Empty; // if no context or claim, return empty Guid
+        }
+    }
 
     public bool IsAuthenticated =>
         httpContextAccessor.HttpContext?.User?.Identity?.IsAuthenticated == true;
