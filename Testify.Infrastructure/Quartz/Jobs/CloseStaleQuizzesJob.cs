@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Quartz;
+using Testify.Application.Abstractions.Repositories;
 using Testify.Application.Common;
-using Testify.Domain.Repositories;
 
 namespace Testify.Infrastructure.Quartz.Jobs;
 

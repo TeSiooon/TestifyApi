@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Testify.API.Extensions;
+using Testify.API.Middlewares;
 using Testify.Application.Extensions;
 using Testify.Domain.Entities;
 using Testify.Infrastructure.Extensions;
@@ -12,6 +13,7 @@ builder.AddPresentation();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddScoped<UserSeeder>();
+builder.Services.AddScoped<QuizSeeder>();
 
 
 builder.Services.AddCors(options =>
@@ -32,10 +34,14 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<TestifyDbContext>();
     db.Database.Migrate();
     var seeder = scope.ServiceProvider.GetRequiredService<UserSeeder>();
+    var quizSeeder = scope.ServiceProvider.GetRequiredService<QuizSeeder>();
     await seeder.SeedUsersAsync();
+    await quizSeeder.SeedQuizzesAsync();
 }
 
 app.UseCors("AllowFrontend");
+
+app.UseMiddleware<ErrorHandlingMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -48,6 +54,7 @@ if (app.Environment.IsDevelopment())
         c.SwaggerEndpoint("/swagger/Quizzes/swagger.json", "Quiz API");
         c.SwaggerEndpoint("/swagger/Questions/swagger.json", "Question API");
         c.SwaggerEndpoint("/swagger/QuizAttempts/swagger.json", "QuizAttempt API");
+        c.SwaggerEndpoint("/swagger/UserProfile/swagger.json", "UserProfile API");
         c.SwaggerEndpoint("/swagger/Enums/swagger.json", "Enum API");
         c.InjectStylesheet("/custom.css");
     });
@@ -57,6 +64,8 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseRateLimiter();
 
 app.MapControllers();
 

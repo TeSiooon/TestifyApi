@@ -1,13 +1,13 @@
 ﻿using MediatR;
+using Testify.Application.Abstractions.Repositories;
 using Testify.Application.Common;
 using Testify.Domain.Entities;
-using Testify.Domain.Repositories;
 
 namespace Testify.Application.QuizAttempts.Command.Finish;
 
-public record FinishAttemptCommand(Guid AttemptId) : IRequest<Unit>
+public record FinishAttemptCommand(Guid AttemptId) : IRequest<Guid>
 {
-    public class Handler : IRequestHandler<FinishAttemptCommand, Unit>
+    public class Handler : IRequestHandler<FinishAttemptCommand, Guid>
     {
         private readonly IUserQuizAttemptRepository repo;
         private readonly IUnitOfWork unitOfWork;
@@ -20,7 +20,7 @@ public record FinishAttemptCommand(Guid AttemptId) : IRequest<Unit>
             this.userQuizResultRepository = userQuizResultRepository;
         }
 
-        public async Task<Unit> Handle(FinishAttemptCommand request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(FinishAttemptCommand request, CancellationToken cancellationToken)
         {
             var attempt = await repo.GetByIdAsync(request.AttemptId, cancellationToken);
 
@@ -28,8 +28,6 @@ public record FinishAttemptCommand(Guid AttemptId) : IRequest<Unit>
 
             var correctCount = attempt.Answers
                 .Count(ua => ua.SelectedAnswer.IsCorrect);
-
-            var totalQuestions = attempt.Quiz.Questions.Count;
 
             var attemptsCount = await repo
                 .CountAttemptsAsync(attempt.UserId, attempt.QuizId, cancellationToken);
@@ -46,7 +44,7 @@ public record FinishAttemptCommand(Guid AttemptId) : IRequest<Unit>
 
             await unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return Unit.Value;
+            return result.Id;
         }
     }
 }

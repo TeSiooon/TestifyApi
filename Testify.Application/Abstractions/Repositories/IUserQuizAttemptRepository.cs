@@ -1,6 +1,6 @@
 ﻿using Testify.Domain.Entities;
 
-namespace Testify.Domain.Repositories;
+namespace Testify.Application.Abstractions.Repositories;
 
 public interface IUserQuizAttemptRepository
 {

@@ -1,7 +1,7 @@
 ﻿using Testify.Domain.Constants;
 using Testify.Domain.Entities;
 
-namespace Testify.Domain.Repositories;
+namespace Testify.Application.Abstractions.Repositories;
 
 public interface IQuizRepository
 {
@@ -12,4 +12,5 @@ public interface IQuizRepository
         int pageSize, int pageNumber, string? sortBy, SortDirection sortDirection);
     Task DeleteAsync(Guid id, CancellationToken cancellationToken = default);
     Task<List<Quiz>> GetAllAsync(CancellationToken cancellationToken = default);
+    Task<List<Quiz>> GetTopQuizzesAsync(int count, CancellationToken cancellationToken = default);
 }

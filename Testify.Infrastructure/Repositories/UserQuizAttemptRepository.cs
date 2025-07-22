@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Testify.Application.Abstractions.Repositories;
 using Testify.Domain.Entities;
-using Testify.Domain.Repositories;
 using Testify.Infrastructure.Persistance;
 
 namespace Testify.Infrastructure.Repositories;
@@ -29,6 +29,7 @@ public class UserQuizAttemptRepository : IUserQuizAttemptRepository
     {
         return await dbContext.UserQuizAttempts
             .Include(ua => ua.Answers)
+            .ThenInclude(sa=> sa.SelectedAnswer)
             .FirstOrDefaultAsync(a => a.Id == id, cancellationToken) ?? throw new KeyNotFoundException();
     }
 

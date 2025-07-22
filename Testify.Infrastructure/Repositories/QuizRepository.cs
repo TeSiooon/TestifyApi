@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using Testify.Application.Abstractions.Repositories;
 using Testify.Domain.Constants;
 using Testify.Domain.Entities;
-using Testify.Domain.Repositories;
 using Testify.Infrastructure.Persistance;
 
 namespace Testify.Infrastructure.Repositories;
@@ -79,5 +79,13 @@ public class QuizRepository : IQuizRepository
         var quizzes = await dbContext.Quizzes.ToListAsync(cancellationToken);
 
         return quizzes;
+    }
+
+    public async Task<List<Quiz>> GetTopQuizzesAsync(int count, CancellationToken cancellationToken = default)
+    {
+        return await dbContext.Quizzes
+            .OrderBy(q => Guid.NewGuid()) // Random order
+            .Take(count)
+            .ToListAsync(cancellationToken);
     }
 }

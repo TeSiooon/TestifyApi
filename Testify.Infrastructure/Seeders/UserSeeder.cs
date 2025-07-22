@@ -45,10 +45,10 @@ public class UserSeeder
             {
                 user = new User(defaultUser.UserName, defaultUser.Email);
                 var createResult = await userManager.CreateAsync(user, defaultUser.Password);
+
                 if (!createResult.Succeeded)
-                {
                     continue;
-                }
+
                 await userManager.AddToRoleAsync(user, defaultUser.Role);
             }
         }

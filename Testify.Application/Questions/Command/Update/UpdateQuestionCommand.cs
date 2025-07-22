@@ -1,8 +1,8 @@
 ﻿using MediatR;
+using Testify.Application.Abstractions.Repositories;
 using Testify.Application.Common;
 using Testify.Application.Dtos;
 using Testify.Domain.Entities;
-using Testify.Domain.Repositories;
 
 namespace Testify.Application.Questions.Command.Update;
 
