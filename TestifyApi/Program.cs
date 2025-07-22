@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Testify.API.Extensions;
+using Testify.API.Middlewares;
 using Testify.Application.Extensions;
 using Testify.Domain.Entities;
 using Testify.Infrastructure.Extensions;
@@ -40,6 +41,8 @@ using (var scope = app.Services.CreateScope())
 
 app.UseCors("AllowFrontend");
 
+app.UseMiddleware<ErrorHandlingMiddleware>();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -61,6 +64,8 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseRateLimiter();
 
 app.MapControllers();
 
