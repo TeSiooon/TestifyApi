@@ -19,7 +19,8 @@ public class QuizRepository : IQuizRepository
         await dbContext.Quizzes.AddAsync(entity);
     }
 
-    public async Task<(IEnumerable<Quiz>, int)> GetAllMatchingAsync(string? searchPhrase, int pageSize, int pageNumber, string? sortBy, SortDirection sortDirection)
+    public async Task<(IEnumerable<Quiz>, int)> GetAllMatchingAsync(string? searchPhrase, int pageSize,
+        int pageNumber, string? sortBy, SortDirection sortDirection)
     {
         var searchPhraseLower = searchPhrase?.ToLower();
 
