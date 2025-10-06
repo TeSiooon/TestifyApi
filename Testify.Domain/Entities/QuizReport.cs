@@ -9,6 +9,7 @@ public class QuizReport : AuditableEntity
     }
     public QuizReport(Guid quizId, Guid reportedById, string reason)
     {
+        Id = Guid.NewGuid();
         QuizId = quizId;
         ReportedById = reportedById;
         Reason = reason;
