@@ -18,6 +18,7 @@ public class User : IdentityUser<Guid>
     public ICollection<Quiz> CreatedQuizzes { get; private set; } = new List<Quiz>();
     public ICollection<Comment> Comments { get; private set; } = new List<Comment>();
     public ICollection<UserQuizAttempt> QuizAttempts { get; private set; } = new List<UserQuizAttempt>();
+    public ICollection<QuizReport> QuizReports { get; private set; } = new List<QuizReport>();
 
     public static User Create(string userName, string email)
     {

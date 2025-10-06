@@ -6,6 +6,7 @@ namespace Testify.Domain.Entities;
 public class Quiz : AuditableEntity
 {
     private readonly List<Question> questions = new();
+    private readonly List<QuizReport> reports = new();
     private Quiz() 
     {
 
@@ -33,6 +34,8 @@ public class Quiz : AuditableEntity
     public ICollection<Question> Questions => questions.AsReadOnly();
     public ICollection<Comment> Comments { get; private set; } = new List<Comment>();
 
+    public ICollection<QuizReport> Reports => reports.AsReadOnly();
+
     public static Quiz Create(string title, string description, QuizCategoryType category, bool isPrivate,
         int maxAttempts, TimeSpan? timeLimit)
     {
@@ -53,5 +56,10 @@ public class Quiz : AuditableEntity
     public void AddQuestion(Question question)
     {
         questions.Add(question);
+    }
+
+    public void AddQuizReport(QuizReport report)
+    {
+        reports.Add(report);
     }
 }
