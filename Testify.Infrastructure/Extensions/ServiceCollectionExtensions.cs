@@ -8,7 +8,6 @@ using Testify.Application.Common;
 using Testify.Domain.Entities;
 using Testify.Infrastructure.Persistance;
 using Testify.Infrastructure.Quartz;
-using Testify.Infrastructure.Quartz.Jobs;
 using Testify.Infrastructure.Repositories;
 using Testify.Infrastructure.Services;
 
@@ -33,6 +32,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IAnswerRepository, AnswerRepository>();
         services.AddScoped<IUserQuizAttemptRepository, UserQuizAttemptRepository>();
         services.AddScoped<IUserQuizResultRepository, UserQuizResultRepository>();
+        services.AddScoped<IQuizReportRepository, QuizReportRepository>();
 
         services.AddHttpContextAccessor();
         services.AddScoped<ICurrentUserService, CurrentUserService>();

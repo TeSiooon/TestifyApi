@@ -27,6 +27,7 @@ public class TestifyFixture : IAsyncLifetime, IDisposable
     public IUserQuizResultRepository UserQuizResultRepository { get; }
     public ICurrentUserService CurrentUserService { get; }
     public UserManager<User> UserManager { get; }
+    public IQuizReportRepository QuizReportRepository { get; }
 
     public TestifyFixture()
     {
@@ -48,6 +49,7 @@ public class TestifyFixture : IAsyncLifetime, IDisposable
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IUserQuizAttemptRepository, UserQuizAttemptRepository>();
         services.AddScoped<IUserQuizResultRepository, UserQuizResultRepository>();
+        services.AddScoped<IQuizReportRepository, QuizReportRepository>();
 
         services.AddHttpContextAccessor();
 
@@ -67,6 +69,7 @@ public class TestifyFixture : IAsyncLifetime, IDisposable
         CurrentUserService = scope.ServiceProvider.GetRequiredService<ICurrentUserService>();
         UserQuizResultRepository = scope.ServiceProvider.GetRequiredService<IUserQuizResultRepository>();
         UserManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+        QuizReportRepository = scope.ServiceProvider.GetRequiredService<IQuizReportRepository>();
     }
 
     public void Dispose()
